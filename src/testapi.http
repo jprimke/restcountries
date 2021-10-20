@@ -1,0 +1,64 @@
+GET https://restcountries.azurewebsites.net/countries/all
+
+###
+
+GET https://restcountries.azurewebsites.net/countries/alpha/PT
+
+###
+
+GET https://restcountries.azurewebsites.net/countries/alpha/DEU
+
+
+### Should be 404 because code is too small
+
+GET https://restcountries.azurewebsites.net/countries/alpha/P
+
+
+### Should also be 404 because code is too long
+
+GET https://restcountries.azurewebsites.net/countries/alpha/DEUT
+
+###
+
+GET https://restcountries.azurewebsites.net/countries/alpha?codes=DE;US;FRA
+
+###
+
+GET https://restcountries.azurewebsites.net/countries/region/europe
+
+###
+
+GET https://restcountries.azurewebsites.net/countries/capital/berlin
+
+
+### Search for name parts
+
+GET https://restcountries.azurewebsites.net/countries/name/united
+
+
+### Search for full name
+
+GET https://restcountries.azurewebsites.net/countries/name/France?FullText=true
+
+###
+
+https://restcountries.azurewebsites.net/countries/regionalBloc/EU
+
+###
+
+https://restcountries.azurewebsites.net/countries/callingCode/44
+
+
+###
+
+https://restcountries.azurewebsites.net/countries/lang/de
+
+
+### Search for Top level domain (. can be include)
+
+https://restcountries.azurewebsites.net/countries/topleveldomain/.de
+
+
+### Search for cioc
+
+https://restcountries.azurewebsites.net/countries/cioc/usa

@@ -42,23 +42,23 @@ GET https://restcountries.azurewebsites.net/countries/name/France?FullText=true
 
 ###
 
-https://restcountries.azurewebsites.net/countries/regionalBloc/EU
+GET https://restcountries.azurewebsites.net/countries/regionalBloc/EU
 
 ###
 
-https://restcountries.azurewebsites.net/countries/callingCode/44
+GET https://restcountries.azurewebsites.net/countries/callingCode/44
 
 
 ###
 
-https://restcountries.azurewebsites.net/countries/lang/de
+GET https://restcountries.azurewebsites.net/countries/lang/de
 
 
 ### Search for Top level domain (. can be include)
 
-https://restcountries.azurewebsites.net/countries/topleveldomain/.de
+GET https://restcountries.azurewebsites.net/countries/topleveldomain/.de
 
 
 ### Search for cioc
 
-https://restcountries.azurewebsites.net/countries/cioc/usa
+GET https://restcountries.azurewebsites.net/countries/cioc/usa

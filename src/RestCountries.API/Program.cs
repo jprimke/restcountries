@@ -15,6 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddControllers();
 
 builder.Services.AddAuthorization();
+builder.Services.AddHealthChecks();
+//builder.Services.AddLogging();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1.0", new() { Title = "RestCountries.API", Version = "v1.0" }); });

@@ -20,9 +20,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1.0", new() { Title = "RestCountries.API", Version = "v1.0" }); });
 
 builder.Services
-       .AddSingleton(sp =>
-                         new CountryRepository(Path.Combine(builder.Configuration.GetValue<string>("ResourceDirectory"),
-                                                            "allcountries.json")));
+       .Configure<CountryRepositoryOptions>(config =>
+                                            {
+                                                config.Directory = builder.Configuration.GetValue<string>("ResourceDirectory");
+                                                config.FileName = "allcountries.json";
+                                            });
+builder.Services.AddSingleton<CountryRepository>();
 
 var app = builder.Build();
 
@@ -37,81 +40,48 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapGet("countries/all", (CountryRepository repository) => repository.Countries);
+app.MapGet("countries/all", (CountryRepository repository) => Results.Ok(repository.GetAll()));
 
 app.MapGet("countries/alpha/{alphaCode:alpha:length(2,3)}",
-           (CountryRepository repository, string alphaCode) =>
-               repository.Countries
-                         .Where(c => (c.Alpha2Code.ToLower() == alphaCode.ToLower()) || (c.Alpha3Code.ToLower() == alphaCode.ToLower())));
+           (CountryRepository repository, string alphaCode) => Results.Ok(repository.GetCountriesByAlphaCode(alphaCode)));
 
 app.MapGet("countries/alpha",
            (CountryRepository repository, [FromQuery] string codes) =>
            {
                var splitCodes = codes.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-               splitCodes = splitCodes.Select(s => s.ToLower()).ToArray();
-               return repository.Countries
-                                .Where(c => splitCodes.Contains(c.Alpha2Code.ToLower()) || splitCodes.Contains(c.Alpha3Code.ToLower()));
+               return Results.Ok(repository.GetCountriesByAlphaCodes(splitCodes));
            });
 
 app.MapGet("countries/name/{name}",
            (CountryRepository repository, string name, [FromQuery] bool? fullText) =>
-           {
-               name = name.ToLower();
-
-               if (fullText ?? false)
-               {
-                   return repository.Countries.Where(c => (c.Name.ToLower() == name) || (c.NativeName.ToLower() == name));
-               }
-               else
-               {
-                   return repository.Countries.Where(c => c.Name.ToLower().Contains(name) || c.NativeName.ToLower().Contains(name));
-               }
-           });
+               Results.Ok(repository.GetCountriesByName(name, fullText)));
 
 app.MapGet("countries/region/{region:alpha}",
-           (CountryRepository repository, string region) => repository.Countries.Where(c => c.Region.ToLower() == region.ToLower()));
+           (CountryRepository repository, string region) => Results.Ok(repository.GetCountriesByRegion(region)));
 
 app.MapGet("countries/currency/{currency:alpha}",
-           (CountryRepository repository, string currency) =>
-               repository.Countries
-                         .Where(c =>
-                                    c.Currencies
-                                     .Any(cur => (cur.Name.ToLower() == currency.ToLower()) || (cur.Code.ToLower() == currency.ToLower()))));
+           (CountryRepository repository, string currency) => Results.Ok(repository.GetCountriesByCurrency(currency)));
 
-app.MapGet("countries/lang/{lang:alpha}",
-           (CountryRepository repository, string lang) =>
-           {
-               lang = lang.ToLower();
-               return repository.Countries
-                                .Where(c =>
-                                           c.Languages
-                                            .Any(l =>
-                                                     (l.Iso639_1.ToLower() == lang)
-                                                     || (l.Iso639_2.ToLower() == lang)
-                                                     || (l.Name.ToLower() == lang)
-                                                     || (l.NativeName.ToLower() == lang)));
-           });
+app.MapGet("countries/lang/{lang:alpha:length(2)}",
+           (CountryRepository repository, string lang) => Results.Ok(repository.GetCountriesByLanguage(lang)));
 
 app.MapGet("countries/callingcode/{callingcode}",
-           (CountryRepository repository, string callingcode) => repository.Countries.Where(c => c.CallingCodes.Any(c => c == callingcode)));
+           (CountryRepository repository, string callingcode) => Results.Ok(repository.GetCountriesByCallingCode(callingcode)));
 
 app.MapGet("countries/subregion/{subregion:alpha}",
-           (CountryRepository repository, string subregion) => repository.Countries.Where(c => c.SubRegion.ToLower() == subregion.ToLower()));
+           (CountryRepository repository, string subregion) => Results.Ok(repository.GetCountriesBySubRegion(subregion)));
 
 app.MapGet("countries/capital/{capital:alpha}",
-           (CountryRepository repository, string capital) => repository.Countries.Where(c => c.Capital.ToLower() == capital.ToLower()));
+           (CountryRepository repository, string capital) => Results.Ok(repository.GetCountriesByCapital(capital)));
 
 app.MapGet("countries/regionalBloc/{bloc:alpha}",
-           (CountryRepository repository, string bloc) =>
-               repository.Countries
-                         .Where(c =>
-                                    c.RegionalBlocs
-                                     .Any(b => (b.Name.ToLower() == bloc.ToLower()) || (b.Acronym.ToLower() == bloc.ToLower()))));
+           (CountryRepository repository, string bloc) => Results.Ok(repository.GetCountriesByRegionalBloc(bloc)));
 
 app.MapGet("countries/topleveldomain/{topleveldomain}",
-           (CountryRepository repository, string topleveldomain) => repository.Countries.Where(c => c.TopLevelDomain.Any(t => t.ToLower().Contains(topleveldomain.ToLower()))));
+           (CountryRepository repository, string topleveldomain) => Results.Ok(repository.GetCountriesByTopLevelDomain(topleveldomain)));
 
-app.MapGet("countries/cioc/{cioc:alpha}",
-           (CountryRepository repository, string cioc) => repository.Countries.Where(c => c.Cioc.ToLower() == cioc.ToLower()));
+app.MapGet("countries/cioc/{cioc:alpha}", (CountryRepository repository, string cioc) => Results.Ok(repository.GetCountryByCioc(cioc)));
+
+app.MapHealthChecks("/health");
 
 app.Run();

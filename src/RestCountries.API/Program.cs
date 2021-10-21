@@ -37,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "RestCountries.API v1.0"));
 }
 
+app.UseHsts();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

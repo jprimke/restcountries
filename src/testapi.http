@@ -62,3 +62,8 @@ GET https://restcountries.azurewebsites.net/countries/topleveldomain/.de
 ### Search for cioc
 
 GET https://restcountries.azurewebsites.net/countries/cioc/usa
+
+
+### Health check
+
+GET https://restcountries.azurewebsites.net/health

@@ -9,8 +9,6 @@ This is a C# port of https://github.com/apilayer/restcountries to a minimal REST
 
 [![DevSkim](https://github.com/jprimke/restcountries/actions/workflows/devskim-analysis.yml/badge.svg?branch=main)](https://github.com/jprimke/restcountries/actions/workflows/devskim-analysis.yml)
 
-[![SecurityCodeScan](https://github.com/jprimke/restcountries/actions/workflows/securitycodescan-analysis.yml/badge.svg)](https://github.com/jprimke/restcountries/actions/workflows/securitycodescan-analysis.yml)
-
 API Endpoints
 =======
 

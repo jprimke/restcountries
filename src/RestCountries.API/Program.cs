@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-using RestCountries.API.Models;
+using RestCountries.API.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +71,7 @@ app.MapGet("countries/lang/{lang:alpha:length(2)}",
 app.MapGet("countries/callingcode/{callingcode}",
            (CountryRepository repository, string callingcode) => Results.Ok(repository.GetCountriesByCallingCode(callingcode)));
 
-app.MapGet("countries/subregion/{subregion:alpha}",
+app.MapGet("countries/subregion/{subregion}",
            (CountryRepository repository, string subregion) => Results.Ok(repository.GetCountriesBySubRegion(subregion)));
 
 app.MapGet("countries/capital/{capital:alpha}",
@@ -83,7 +83,7 @@ app.MapGet("countries/regionalBloc/{bloc:alpha}",
 app.MapGet("countries/topleveldomain/{topleveldomain}",
            (CountryRepository repository, string topleveldomain) => Results.Ok(repository.GetCountriesByTopLevelDomain(topleveldomain)));
 
-app.MapGet("countries/cioc/{cioc:alpha}", (CountryRepository repository, string cioc) => Results.Ok(repository.GetCountryByCioc(cioc)));
+app.MapGet("countries/cioc/{cioc:alpha}", (CountryRepository repository, string cioc) => Results.Ok(repository.GetCountriesByCioc(cioc)));
 
 app.MapHealthChecks("/health");
 

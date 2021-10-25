@@ -28,6 +28,10 @@ GET https://restcountries.azurewebsites.net/countries/region/europe
 
 ###
 
+GET https://restcountries.azurewebsites.net/countries/subregion/central%20europe
+
+###
+
 GET https://restcountries.azurewebsites.net/countries/capital/berlin
 
 

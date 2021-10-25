@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="D:\PROJEKTE\restcountries\src\RestCountries.API\Models\CountryRepository.cs" company="AXA Partners">
+// <copyright file="D:\PROJEKTE\restcountries\src\RestCountries.API\Data\CountryRepository.cs" company="AXA Partners">
 // Author: Jörg H Primke
 // Copyright (c) 2021 - AXA Partners. All rights reserved.
 // </copyright>
@@ -7,14 +7,23 @@
 
 using System.Text.Json;
 using Microsoft.Extensions.Options;
+using RestCountries.API.Models;
 
-namespace RestCountries.API.Models;
+namespace RestCountries.API.Data;
 
 public class CountryRepository
 {
     private readonly ILogger<CountryRepository> logger;
 
     private readonly IEnumerable<CountryInfo> countries;
+
+    internal CountryRepository(ILogger<CountryRepository> logger, string fileName)
+    {
+        this.logger = logger;
+        countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
+                                                                  new JsonSerializerOptions(JsonSerializerDefaults.Web))
+            ?? new();
+    }
 
     public CountryRepository(ILogger<CountryRepository> logger, IOptions<CountryRepositoryOptions> options)
     {
@@ -82,7 +91,7 @@ public class CountryRepository
     public IEnumerable<CountryInfo> GetCountriesByRegionalBloc(string bloc)
     {
         return countries
-                 .Where(c => c.RegionalBlocs.Any(b => (b.Name.ToLower() == bloc.ToLower()) || (b.Acronym.ToLower() == bloc.ToLower())));
+             .Where(c => c.RegionalBlocs.Any(b => (b.Name.ToLower() == bloc.ToLower()) || (b.Acronym.ToLower() == bloc.ToLower())));
     }
 
     public IEnumerable<CountryInfo> GetCountriesBySubRegion(string subregion)
@@ -95,7 +104,7 @@ public class CountryRepository
         return countries.Where(c => c.TopLevelDomain.Any(t => t.ToLower().Contains(topleveldomain.ToLower())));
     }
 
-    public IEnumerable<CountryInfo> GetCountryByCioc(string cioc)
+    public IEnumerable<CountryInfo> GetCountriesByCioc(string cioc)
     {
         return countries.Where(c => c.Cioc.ToLower() == cioc.ToLower());
     }
@@ -104,12 +113,12 @@ public class CountryRepository
     {
         lang = lang.ToLower();
         return countries
-                 .Where(c =>
-                            c.Languages
-                             .Any(l =>
-                                      (l.Iso639_1.ToLower() == lang)
-                                      || (l.Iso639_2.ToLower() == lang)
-                                      || (l.Name.ToLower() == lang)
-                                      || (l.NativeName.ToLower() == lang)));
+             .Where(c =>
+                        c.Languages
+                         .Any(l =>
+                                  (l.Iso639_1.ToLower() == lang)
+                                  || (l.Iso639_2.ToLower() == lang)
+                                  || (l.Name.ToLower() == lang)
+                                  || (l.NativeName.ToLower() == lang)));
     }
 }

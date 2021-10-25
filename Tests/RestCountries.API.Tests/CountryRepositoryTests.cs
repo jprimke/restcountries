@@ -13,7 +13,7 @@ namespace RestCountries.API.Tests
         {
             var factory = new LoggerFactory();
             var logger = factory.CreateLogger<CountryRepository>();
-            sut = new CountryRepository(logger, @"resources/allCountries.json");
+            sut = new CountryRepository(logger, @"Resources/allCountries.json");
         }
 
         [Fact]

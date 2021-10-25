@@ -8,7 +8,7 @@
 
 namespace RestCountries.API.Data;
 
-public class CountryRepositoryOptions
+public class CountryFileOptions
 {
     public string Directory { get; set; } = string.Empty;
 

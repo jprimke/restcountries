@@ -1,6 +1,9 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Moq;
 using RestCountries.API.Data;
+using RestCountries.API.Models;
+using System.Collections.Generic;
 using Xunit;
 
 namespace RestCountries.API.Tests
@@ -12,8 +15,8 @@ namespace RestCountries.API.Tests
         public CountryRepositoryTests()
         {
             var factory = new LoggerFactory();
-            var logger = factory.CreateLogger<CountryRepository>();
-            sut = new CountryRepository(logger, @"Resources/allCountries.json");
+            var countryFileContext = new CountryFileContext(factory.CreateLogger<CountryFileContext>(), @"Resources/allCountries.json");
+            sut = new CountryRepository(factory.CreateLogger<CountryRepository>(), countryFileContext);
         }
 
         [Fact]

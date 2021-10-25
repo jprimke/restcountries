@@ -9,10 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="6.0.0-rc.2.21480.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="RestCountries.API.Tests"/>
+    <InternalsVisibleTo Include="RestCountries.API.Tests" />
   </ItemGroup>
 </Project>

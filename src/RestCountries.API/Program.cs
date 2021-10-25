@@ -21,11 +21,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1.0", new() { Title = "RestCountries.API", Version = "v1.0" }); });
 
 builder.Services
-       .Configure<CountryRepositoryOptions>(config =>
+       .Configure<CountryFileOptions>(config =>
                                             {
                                                 config.Directory = builder.Configuration.GetValue<string>("ResourceDirectory");
-                                                config.FileName = "allcountries.json";
+                                                config.FileName = "allCountries.json";
                                             });
+builder.Services.AddSingleton<ICountryContext, CountryFileContext>();
 builder.Services.AddSingleton<CountryRepository>();
 
 var app = builder.Build();

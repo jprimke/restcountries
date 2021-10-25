@@ -1,9 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using Moq;
 using RestCountries.API.Data;
-using RestCountries.API.Models;
-using System.Collections.Generic;
 using Xunit;
 
 namespace RestCountries.API.Tests

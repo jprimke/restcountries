@@ -5,9 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Microsoft.Extensions.Logging;
 using RestCountries.API.Models;
 
-namespace RestCountries.API.Data;
+namespace RestCountries.Data;
 
 public class CountryRepository
 {
@@ -28,7 +29,7 @@ public class CountryRepository
 
     public IEnumerable<CountryInfo> GetCountriesByAlphaCode(string alphaCode)
     {
-        return context.Countries.Where(c => (c.Alpha2Code.ToLower() == alphaCode.ToLower()) || (c.Alpha3Code.ToLower() == alphaCode.ToLower()));
+        return context.Countries.Where(c => c.Alpha2Code.ToLower() == alphaCode.ToLower() || c.Alpha3Code.ToLower() == alphaCode.ToLower());
     }
 
     public IEnumerable<CountryInfo> GetCountriesByAlphaCodes(string[] alphaCodes)
@@ -43,7 +44,7 @@ public class CountryRepository
 
         if (fullText ?? false)
         {
-            return context.Countries.Where(c => (c.Name.ToLower() == name) || (c.NativeName.ToLower() == name));
+            return context.Countries.Where(c => c.Name.ToLower() == name || c.NativeName.ToLower() == name);
         }
         else
         {
@@ -60,7 +61,7 @@ public class CountryRepository
     {
         return context.Countries.Where(c =>
                                    c.Currencies
-                                    .Any(cur => (cur.Name.ToLower() == currency.ToLower()) || (cur.Code.ToLower() == currency.ToLower())));
+                                    .Any(cur => cur.Name.ToLower() == currency.ToLower() || cur.Code.ToLower() == currency.ToLower()));
     }
 
     public IEnumerable<CountryInfo> GetCountriesByCallingCode(string callingcode)
@@ -76,7 +77,7 @@ public class CountryRepository
     public IEnumerable<CountryInfo> GetCountriesByRegionalBloc(string bloc)
     {
         return context.Countries
-             .Where(c => c.RegionalBlocs.Any(b => (b.Name.ToLower() == bloc.ToLower()) || (b.Acronym.ToLower() == bloc.ToLower())));
+             .Where(c => c.RegionalBlocs.Any(b => b.Name.ToLower() == bloc.ToLower() || b.Acronym.ToLower() == bloc.ToLower()));
     }
 
     public IEnumerable<CountryInfo> GetCountriesBySubRegion(string subregion)
@@ -101,9 +102,9 @@ public class CountryRepository
              .Where(c =>
                         c.Languages
                          .Any(l =>
-                                  (l.Iso639_1.ToLower() == lang)
-                                  || (l.Iso639_2.ToLower() == lang)
-                                  || (l.Name.ToLower() == lang)
-                                  || (l.NativeName.ToLower() == lang)));
+                                  l.Iso639_1.ToLower() == lang
+                                  || l.Iso639_2.ToLower() == lang
+                                  || l.Name.ToLower() == lang
+                                  || l.NativeName.ToLower() == lang));
     }
 }

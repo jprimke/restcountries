@@ -7,7 +7,7 @@
 
 using RestCountries.API.Models;
 
-namespace RestCountries.API.Data;
+namespace RestCountries.Data;
 
 public interface ICountryContext
 {

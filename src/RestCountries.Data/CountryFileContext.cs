@@ -6,10 +6,11 @@
 // -----------------------------------------------------------------------
 
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RestCountries.API.Models;
 
-namespace RestCountries.API.Data;
+namespace RestCountries.Data;
 
 public class CountryFileContext : ICountryContext
 {

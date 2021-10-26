@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using RestCountries.API.Data;
+using RestCountries.Data;
 using Xunit;
 
 namespace RestCountries.API.Tests

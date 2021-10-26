@@ -6,7 +6,7 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
-using RestCountries.API.Data;
+using RestCountries.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

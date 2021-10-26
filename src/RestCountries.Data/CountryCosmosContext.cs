@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestCountries.API.Models;
 
-namespace RestCountries.API.Data
+namespace RestCountries.Data
 {
 
     public class CountryCosmosContext : DbContext, ICountryContext

@@ -5,8 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-
-namespace RestCountries.API.Data;
+namespace RestCountries.Data;
 
 public class CountryFileOptions
 {

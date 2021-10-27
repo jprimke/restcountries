@@ -13,6 +13,10 @@ env:
   WORKING_DIRECTORY: src/RestCountries.API
   TEST_DIRECTORY: Tests/RestCountries.Tests
 
+concurrency: 
+  group: build_and_deploy
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build 👷‍♂️

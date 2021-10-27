@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using RestCountries.API.Models;
+using RestCountries.Data.Models;
 
 namespace RestCountries.Data;
 
 public interface ICountryContext
 {
-    public IEnumerable<CountryInfo> Countries { get; }
+    public IQueryable<CountryInfo> Countries { get; }
 }

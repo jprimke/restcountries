@@ -6,9 +6,11 @@
 // -----------------------------------------------------------------------
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestCountries.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration configuration = builder.Configuration;
 
 // Add services to the container.
 
@@ -23,11 +25,19 @@ builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1.0", new() { Title = "Rest
 builder.Services
        .Configure<CountryFileOptions>(config =>
                                             {
-                                                config.Directory = builder.Configuration.GetValue<string>("ResourceDirectory");
+                                                config.Directory = configuration.GetValue<string>("ResourceDirectory");
                                                 config.FileName = "allCountries.json";
                                             });
-builder.Services.AddSingleton<ICountryContext, CountryFileContext>();
-builder.Services.AddSingleton<CountryRepository>();
+
+builder.Services
+       .AddDbContext<ICountryContext, CountryCosmosContext>(options =>
+                                                            { 
+                                                                var cs = configuration.GetValue<string>("CosmosDb:ConnectionString");
+                                                                var dn = configuration.GetValue<string>("CosmosDb:DatabaseName");
+                                                                options.UseCosmos(cs, dn);
+                                                            });
+// builder.Services.AddSingleton<ICountryContext, CountryFileContext>();
+builder.Services.AddScoped<CountryRepository>();
 
 var app = builder.Build();
 

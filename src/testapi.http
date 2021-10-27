@@ -20,7 +20,7 @@ GET https://restcountries.azurewebsites.net/countries/alpha/DEUT
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/alpha?codes=DE;US;FRA
+GET https://restcountries.azurewebsites.net/countries/alpha?codes=DE;US;ARG;CHN
 
 ###
 

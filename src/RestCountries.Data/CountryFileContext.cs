@@ -8,7 +8,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using RestCountries.API.Models;
+using RestCountries.Data.Models;
 
 namespace RestCountries.Data;
 
@@ -16,12 +16,14 @@ public class CountryFileContext : ICountryContext
 {
     private readonly ILogger<CountryFileContext> logger;
 
-    public IEnumerable<CountryInfo> Countries { get; }
+    private List<CountryInfo> countries = new();
+    
+    public IQueryable<CountryInfo> Countries => countries.AsQueryable();
 
     internal CountryFileContext(ILogger<CountryFileContext> logger, string fileName)
     {
         this.logger = logger;
-        Countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
+        countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
                                                                   new JsonSerializerOptions(JsonSerializerDefaults.Web))
             ?? new();
     }
@@ -32,7 +34,7 @@ public class CountryFileContext : ICountryContext
         var countryRepositoryOptions = options.Value;
         var fileName = Path.Combine(countryRepositoryOptions.Directory, countryRepositoryOptions.FileName);
 
-        Countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
+        countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
                                                                   new JsonSerializerOptions(JsonSerializerDefaults.Web))
             ?? new();
     }

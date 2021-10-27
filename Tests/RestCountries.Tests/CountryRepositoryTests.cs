@@ -1,28 +1,39 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using Moq;
 using RestCountries.Data;
+using RestCountries.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using Xunit;
 
 namespace RestCountries.Tests;
 
-public class CountryRepository_With_CosmosDbContext_Tests
+public partial class CountryRepositoryTests
 {
     private readonly CountryRepository sut = null!;
 
-    public CountryRepository_With_CosmosDbContext_Tests()
+    private Mock<ICountryContext> contextMock;
+    private IEnumerable<CountryInfo> testCountries = Enumerable.Empty<CountryInfo>();
+
+
+    public CountryRepositoryTests()
     {
         var factory = new LoggerFactory();
-        var countryFileContext = new CountryFileContext(factory.CreateLogger<CountryFileContext>(), @"Resources/allCountries.json");
-        sut = new CountryRepository(factory.CreateLogger<CountryRepository>(), countryFileContext);
+        testCountries = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<CountryInfo>>(testData, new JsonSerializerOptions(JsonSerializerDefaults.Web)) ?? Enumerable.Empty<CountryInfo>();
+        contextMock = new Mock<ICountryContext>();
+        contextMock.Setup(x => x.Countries).Returns(() => testCountries.AsQueryable());
+        sut = new CountryRepository(factory.CreateLogger<CountryRepository>(), contextMock.Object);
     }
 
     [Fact]
-    public void GetAll_ShouldHave_Count_250()
-    {
+    public void GetAll_ShouldHave_Count_4()
+    {       
         var all = sut.GetAll();
 
         all.Should().NotBeNullOrEmpty();
-        all.Should().HaveCount(250);
+        all.Should().HaveCount(4);
     }
 
 
@@ -40,7 +51,7 @@ public class CountryRepository_With_CosmosDbContext_Tests
         var countries = sut.GetCountriesByName("", false);
 
         countries.Should().NotBeNull();
-        countries.Should().HaveCount(250);
+        countries.Should().HaveCount(4);
     }
 
     [Fact]
@@ -82,9 +93,9 @@ public class CountryRepository_With_CosmosDbContext_Tests
     }
 
     [Theory]
-    [InlineData("de;USA;nl", 3)]
+    [InlineData("de;USA;cn", 3)]
     [InlineData("deu", 1)]
-    [InlineData("d;us;pt", 2)]
+    [InlineData("d;us;ar", 2)]
     [InlineData("deut", 0)]
     public void GetByAlphaCodes_Should_Have_count_Entries(string alphaCode, int count)
     {
@@ -126,7 +137,7 @@ public class CountryRepository_With_CosmosDbContext_Tests
     [Fact]
     public void GetByCallingCode_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByCallingCode("44");
+        var countries = sut.GetCountriesByCallingCode("1");
         countries.Should().NotBeNullOrEmpty();
     }
 

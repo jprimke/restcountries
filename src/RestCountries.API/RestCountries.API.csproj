@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AnalysisLevel>preview</AnalysisLevel>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <UserSecretsId>8ea9e2ed-678a-4666-9b5a-17f429f8fedb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace RestCountries.API.Models;
+namespace RestCountries.Data.Models;
 
 public class LanguageInfo
 {

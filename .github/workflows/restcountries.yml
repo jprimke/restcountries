@@ -73,7 +73,7 @@ jobs:
 
       - name: Check health
         run: | 
-          curl --silent --request GET --url https://restcountries-staging.azurewebsites.net/health --header 'user-agent: vscode-restclient' --stderr - | grep -i gealthy
+          curl --silent --request GET --url https://restcountries-staging.azurewebsites.net/health --header 'user-agent: vscode-restclient' --stderr - | grep -i healthy
 
   production:
     name: Deploy on production ✈️

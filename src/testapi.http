@@ -2,6 +2,10 @@ GET https://restcountries.azurewebsites.net/countries/all
 
 ###
 
+Get http://restcountries-staging.azurewebsites.net/countries/all
+
+###
+
 GET https://restcountries.azurewebsites.net/countries/alpha/PT
 
 ###

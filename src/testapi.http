@@ -1,6 +1,12 @@
-@hostname = restcountries-staging
+# @hostname = restcountries-staging
 
-# @hostname = restcountries
+@hostname = restcountries
+
+### Health check
+
+GET https://{{hostname}}.azurewebsites.net/health
+
+###
 
 Get https://{{hostname}}.azurewebsites.net/countries/all
 
@@ -70,8 +76,3 @@ GET https://{{hostname}}.azurewebsites.net/countries/topleveldomain/.de
 ### Search for cioc
 
 GET https://{{hostname}}.azurewebsites.net/countries/cioc/usa
-
-
-### Health check
-
-GET https://{{hostname}}.azurewebsites.net/health

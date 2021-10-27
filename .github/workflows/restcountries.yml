@@ -56,7 +56,7 @@ jobs:
   staging:
     name: Deploy on staging 🔍
     environment:
-      name: staging
+      name: Staging
       url: ${{ steps.deploy_staging.outputs.webapp-url }}
     needs: 
       build
@@ -80,7 +80,7 @@ jobs:
   production:
     name: Deploy on production ✈️
     environment:
-      name: production
+      name: Production
       url: ${{ steps.deploy_production.outputs.webapp-url }}
     needs: 
       staging

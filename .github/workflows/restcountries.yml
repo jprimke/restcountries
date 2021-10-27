@@ -70,6 +70,7 @@ jobs:
 
       - name: Deploy to Azure WebApp ✈️
         uses: azure/webapps-deploy@v2
+        id: deploy_staging
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
@@ -93,6 +94,7 @@ jobs:
 
       - name: Deploy to Azure WebApp ✈️
         uses: azure/webapps-deploy@v2
+        id: deploy_production
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

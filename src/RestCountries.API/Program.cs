@@ -15,8 +15,6 @@ IConfiguration configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
-
-builder.Services.AddAuthorization();
 builder.Services.AddHealthChecks();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -51,8 +49,6 @@ if (app.Environment.IsDevelopment())
 app.UseHsts();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapGet("countries/all", (CountryRepository repository) => Results.Ok(repository.GetAll()));
 

@@ -12,6 +12,7 @@ env:
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src/RestCountries.API
   TEST_DIRECTORY: Tests/RestCountries.Tests
+  WEBAPP_NAME: restcountries_app
 
 concurrency: 
   group: build_and_deploy
@@ -50,7 +51,7 @@ jobs:
     - name: Publish Artifacts ❤️
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: webapp
+        name: ${{ env.AZURE_WEBAPP_NAME }}
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
   staging:
@@ -65,15 +66,15 @@ jobs:
       - name: Download production artifacts 📖
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.WEBAPP_NAME }}
-          path: ./out
+          name: ${{ env.AZURE_WEBAPP_NAME }}
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Deploy to Azure WebApp ✈️
         uses: azure/webapps-deploy@v2
         id: deploy_staging
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: ./out
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           slot-name: staging
 
@@ -89,7 +90,7 @@ jobs:
       - name: Download production artifacts 📖
         uses: actions/download-artifact@v2
         with:
-          name: ${{ env.WEBAPP_NAME }}
+          name: ${{ env.AZURE_WEBAPP_NAME }}
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
       - name: Deploy to Azure WebApp ✈️

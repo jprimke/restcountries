@@ -86,15 +86,15 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
           value: 'recommended'
         }
         {
-          name: 'CosmosDbConnection:ConnectionString'
+          name: 'CosmosDb:ConnectionString'
           value: cosmosConnectionString
         }
         {
-          name: 'CosmosDbConnection:DatabaseName'
+          name: 'CosmosDb:DatabaseName'
           value: cosmosDatabaseName
         }
         {
-          name: 'CosmosDbConnection:ContainerName'
+          name: 'CosmosDb:ContainerName'
           value: cosmosContainerName
         }
       ]    

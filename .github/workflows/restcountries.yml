@@ -1,4 +1,4 @@
-name: Build and Deploy Azure
+name: Build and Deploy on Azure
 
 on:
   push:

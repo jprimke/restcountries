@@ -71,6 +71,10 @@ jobs:
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           slot-name: staging
 
+      - name: Check health
+        run: | 
+          curl --silent --request GET --url https://restcountries-staging.azurewebsites.net/health --header 'user-agent: vscode-restclient' --stderr - | grep -i gealthy
+
   production:
     name: Deploy on production ✈️
     environment:

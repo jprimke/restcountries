@@ -1,77 +1,77 @@
-GET https://restcountries.azurewebsites.net/countries/all
+@hostname = restcountries-staging
+
+# @hostname = restcountries
+
+Get https://{{hostname}}.azurewebsites.net/countries/all
 
 ###
 
-Get https://restcountries-staging.azurewebsites.net/countries/all
+GET https://{{hostname}}.azurewebsites.net/countries/alpha/PT
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/alpha/PT
-
-###
-
-GET https://restcountries.azurewebsites.net/countries/alpha/DEU
+GET https://{{hostname}}.azurewebsites.net/countries/alpha/DEU
 
 
 ### Should be 404 because code is too small
 
-GET https://restcountries.azurewebsites.net/countries/alpha/P
+GET https://{{hostname}}.azurewebsites.net/countries/alpha/P
 
 
 ### Should also be 404 because code is too long
 
-GET https://restcountries.azurewebsites.net/countries/alpha/DEUT
+GET https://{{hostname}}.azurewebsites.net/countries/alpha/DEUT
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/alpha?codes=DE;US;ARG;CHN
+GET https://{{hostname}}.azurewebsites.net/countries/alpha?codes=DE;US;ARG;CHN
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/region/europe
+GET https://{{hostname}}.azurewebsites.net/countries/region/europe
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/subregion/central%20europe
+GET https://{{hostname}}.azurewebsites.net/countries/subregion/central%20europe
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/capital/berlin
+GET https://{{hostname}}.azurewebsites.net/countries/capital/berlin
 
 
 ### Search for name parts
 
-GET https://restcountries.azurewebsites.net/countries/name/united
+GET https://{{hostname}}.azurewebsites.net/countries/name/united
 
 
 ### Search for full name
 
-GET https://restcountries.azurewebsites.net/countries/name/France?FullText=true
+GET https://{{hostname}}.azurewebsites.net/countries/name/France?FullText=true
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/regionalBloc/EU
+GET https://{{hostname}}.azurewebsites.net/countries/regionalBloc/EU
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/callingCode/44
+GET https://{{hostname}}.azurewebsites.net/countries/callingCode/44
 
 
 ###
 
-GET https://restcountries.azurewebsites.net/countries/lang/de
+GET https://{{hostname}}.azurewebsites.net/countries/lang/de
 
 
 ### Search for Top level domain (. can be include)
 
-GET https://restcountries.azurewebsites.net/countries/topleveldomain/.de
+GET https://{{hostname}}.azurewebsites.net/countries/topleveldomain/.de
 
 
 ### Search for cioc
 
-GET https://restcountries.azurewebsites.net/countries/cioc/usa
+GET https://{{hostname}}.azurewebsites.net/countries/cioc/usa
 
 
 ### Health check
 
-GET https://restcountries.azurewebsites.net/health
+GET https://{{hostname}}.azurewebsites.net/health

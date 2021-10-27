@@ -109,7 +109,6 @@ resource app 'Microsoft.Web/sites@2021-02-01' = {
     location: location
     properties: {
       enabled: true
-      httpsOnly: true
     }
     tags: tags
   }

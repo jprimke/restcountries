@@ -8,7 +8,6 @@ on:
 env:
   AZURE_WEBAPP_NAME: restcountries
   AZURE_WEBAPP_PACKAGE_PATH: src/RestCountries.API/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.restcountries_d526 }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src/RestCountries.API
@@ -43,8 +42,11 @@ jobs:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-  deploy:
-    name: Deploy ✈️
+  staging:
+    name: Deploy on staging 🔍
+    environment:
+      name: staging
+      url: ${{ steps.deploy_staging.outputs.webapp-url }}
     needs: 
       build
     runs-on: ubuntu-latest
@@ -60,4 +62,27 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          slot-name: staging
+
+  production:
+    name: Deploy on production ✈️
+    environment:
+      name: production
+      url: ${{ steps.deploy_production.outputs.webapp-url }}
+    needs: 
+      staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download production artifacts 📖
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.WEBAPP_NAME }}
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Deploy to Azure WebApp ✈️
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}

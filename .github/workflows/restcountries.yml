@@ -10,7 +10,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
   WORKING_DIRECTORY: src/RestCountries.API
-  TEST_DIRECTORY: Tests/RestCountries.API.Tests
+  TEST_DIRECTORY: Tests/RestCountries.Tests
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

@@ -41,7 +41,7 @@ jobs:
     - name: Publish 📦 
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
-    - name: Publish Artifacts ❤️
+    - name: Publish Artifacts 🌈
       uses: actions/upload-artifact@v1.0.0
       with:
         name: ${{ env.AZURE_WEBAPP_NAME }}
@@ -71,7 +71,7 @@ jobs:
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           slot-name: staging
 
-      - name: Check health
+      - name: Check health ❤️
         run: | 
           curl --silent --request GET --url https://restcountries-staging.azurewebsites.net/health --header 'user-agent: vscode-restclient' --stderr - | grep -iq healthy
 
@@ -98,6 +98,6 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
 
-      - name: Check health
+      - name: Check health ❤️
         run: | 
           curl --silent --request GET --url ${{ steps.deploy_production.outputs.webapp-url }}/health --header 'user-agent: vscode-restclient' --stderr - | grep -iq healthy

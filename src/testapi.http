@@ -1,78 +1,78 @@
-# @hostname = restcountries-staging
+# @hostname = restcountries-staging.azurewebsites.net
 
-@hostname = restcountries
+@hostname = restcountries.websites.net
 
 ### Health check
 
-GET https://{{hostname}}.azurewebsites.net/health
+GET https://{{hostname}}/health
 
 ###
 
-Get https://{{hostname}}.azurewebsites.net/countries/all
+Get https://{{hostname}}/countries/all
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/alpha/PT
+GET https://{{hostname}}/countries/alpha/PT
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/alpha/DEU
+GET https://{{hostname}}/countries/alpha/DEU
 
 
 ### Should be 404 because code is too small
 
-GET https://{{hostname}}.azurewebsites.net/countries/alpha/P
+GET https://{{hostname}}/countries/alpha/P
 
 
 ### Should also be 404 because code is too long
 
-GET https://{{hostname}}.azurewebsites.net/countries/alpha/DEUT
+GET https://{{hostname}}/countries/alpha/DEUT
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/alpha?codes=DE;US;ARG;CHN
+GET https://{{hostname}}/countries/alpha?codes=DE;US;ARG;CHN
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/region/europe
+GET https://{{hostname}}/countries/region/europe
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/subregion/central%20europe
+GET https://{{hostname}}/countries/subregion/central%20europe
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/capital/berlin
+GET https://{{hostname}}/countries/capital/berlin
 
 
 ### Search for name parts
 
-GET https://{{hostname}}.azurewebsites.net/countries/name/united
+GET https://{{hostname}}/countries/name/united
 
 
 ### Search for full name
 
-GET https://{{hostname}}.azurewebsites.net/countries/name/France?FullText=true
+GET https://{{hostname}}/countries/name/France?FullText=true
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/regionalBloc/EU
+GET https://{{hostname}}/countries/regionalBloc/EU
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/callingCode/44
+GET https://{{hostname}}/countries/callingCode/44
 
 
 ###
 
-GET https://{{hostname}}.azurewebsites.net/countries/lang/de
+GET https://{{hostname}}/countries/lang/de
 
 
 ### Search for Top level domain (. can be include)
 
-GET https://{{hostname}}.azurewebsites.net/countries/topleveldomain/.de
+GET https://{{hostname}}/countries/topleveldomain/.de
 
 
 ### Search for cioc
 
-GET https://{{hostname}}.azurewebsites.net/countries/cioc/usa
+GET https://{{hostname}}/countries/cioc/usa

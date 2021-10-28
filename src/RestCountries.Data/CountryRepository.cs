@@ -29,7 +29,7 @@ public class CountryRepository
 
     public IEnumerable<CountryInfo> GetCountriesByAlphaCode(string alphaCode)
     {
-        return context.Countries.Where(c => c.Alpha2Code.ToLower() == alphaCode.ToLower() || c.Alpha3Code.ToLower() == alphaCode.ToLower()).ToList();
+        return context.Countries.Where(c => string.Equals(c.Alpha2Code, alphaCode, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Alpha3Code, alphaCode, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByAlphaCodes(string[] alphaCodes)
@@ -54,14 +54,14 @@ public class CountryRepository
 
     public IEnumerable<CountryInfo> GetCountriesByRegion(string region)
     {
-        return context.Countries.Where(c => c.Region.ToLower() == region.ToLower()).ToList();
+        return context.Countries.Where(c => string.Equals(c.Region, region, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByCurrency(string currency)
     {
         return context.Countries.Where(c =>
                                    c.Currencies
-                                    .Any(cur => cur.Name.ToLower() == currency.ToLower() || cur.Code.ToLower() == currency.ToLower())).ToList();
+                                    .Any(cur => string.Equals(cur.Name, currency, StringComparison.OrdinalIgnoreCase) || string.Equals(cur.Code, currency, StringComparison.OrdinalIgnoreCase))).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByCallingCode(string callingcode)
@@ -71,28 +71,28 @@ public class CountryRepository
 
     public IEnumerable<CountryInfo> GetCountriesByCapital(string capital)
     {
-        return context.Countries.Where(c => c.Capital.ToLower() == capital.ToLower()).ToList();
+        return context.Countries.Where(c => string.Equals(c.Capital, capital, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByRegionalBloc(string bloc)
     {
         return context.Countries
-             .Where(c => c.RegionalBlocs.Any(b => b.Name.ToLower() == bloc.ToLower() || b.Acronym.ToLower() == bloc.ToLower())).ToList();
+             .Where(c => c.RegionalBlocs.Any(b => string.Equals(b.Name, bloc, StringComparison.OrdinalIgnoreCase) || string.Equals(b.Acronym, bloc, StringComparison.OrdinalIgnoreCase))).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesBySubRegion(string subregion)
     {
-        return context.Countries.Where(c => c.SubRegion.ToLower() == subregion.ToLower()).ToList();
+        return context.Countries.Where(c => string.Equals(c.SubRegion, subregion, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByTopLevelDomain(string topleveldomain)
     {
-        return context.Countries.Where(c => c.TopLevelDomain.Any(t => t.ToLower().Contains(topleveldomain.ToLower()))).ToList();
+        return context.Countries.Where(c => c.TopLevelDomain.Any(t => t.Contains(topleveldomain, StringComparison.OrdinalIgnoreCase))).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByCioc(string cioc)
     {
-        return context.Countries.Where(c => c.Cioc.ToLower() == cioc.ToLower()).ToList();
+        return context.Countries.Where(c => string.Equals(c.Cioc, cioc, StringComparison.OrdinalIgnoreCase)).ToList();
     }
 
     public IEnumerable<CountryInfo> GetCountriesByLanguage(string lang)

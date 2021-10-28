@@ -16,7 +16,7 @@ namespace RestCountries.Data
 {
     public class CountryCosmosContext : DbContext, ICountryContext
     {
-        private string dbName = string.Empty;
+        private readonly string dbName = string.Empty;
         private string containerName = string.Empty;
 
         public DbSet<CountryInfoDbo>? CountriesSet { get; set; }   // Can't use because EF Core for CosmosDB canot handle dictionaries

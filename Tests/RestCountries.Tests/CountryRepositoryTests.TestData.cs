@@ -2,7 +2,7 @@ namespace RestCountries.Tests;
 
 public partial class CountryRepositoryTests
 {
-     const string testData = @"
+     private const string TestData = @"
       [
   {
     ""name"": ""Argentina"",

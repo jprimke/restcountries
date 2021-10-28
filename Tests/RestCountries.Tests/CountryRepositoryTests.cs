@@ -14,14 +14,14 @@ public partial class CountryRepositoryTests
 {
     private readonly CountryRepository sut = null!;
 
-    private Mock<ICountryContext> contextMock;
-    private IEnumerable<CountryInfo> testCountries = Enumerable.Empty<CountryInfo>();
+    private readonly Mock<ICountryContext> contextMock;
+    private readonly IEnumerable<CountryInfo> testCountries = Enumerable.Empty<CountryInfo>();
 
 
     public CountryRepositoryTests()
     {
         var factory = new LoggerFactory();
-        testCountries = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<CountryInfo>>(testData, new JsonSerializerOptions(JsonSerializerDefaults.Web)) ?? Enumerable.Empty<CountryInfo>();
+        testCountries = System.Text.Json.JsonSerializer.Deserialize<IEnumerable<CountryInfo>>(TestData, new JsonSerializerOptions(JsonSerializerDefaults.Web)) ?? Enumerable.Empty<CountryInfo>();
         contextMock = new Mock<ICountryContext>();
         contextMock.Setup(x => x.Countries).Returns(() => testCountries.AsQueryable());
         sut = new CountryRepository(factory.CreateLogger<CountryRepository>(), contextMock.Object);
@@ -29,7 +29,7 @@ public partial class CountryRepositoryTests
 
     [Fact]
     public void GetAll_ShouldHave_Count_4()
-    {       
+    {
         var all = sut.GetAll();
 
         all.Should().NotBeNullOrEmpty();

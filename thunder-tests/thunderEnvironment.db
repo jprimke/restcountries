@@ -1,1 +1,2 @@
-{"default":true,"data":[{"name":"hostname","value":"restcountries.azurewebsites.net"}],"sortNum":10000,"name":"restcountries","created":"2021-10-27T19:15:58.317Z","modified":"2021-10-27T19:16:20.859Z","_id":"c6ef5888-be5f-4d57-b4d0-a5d767e00669"}
+{"default":false,"data":[{"name":"hostname","value":"restcountries-staging.azurewebsites.net"}],"sortNum":20000,"name":"restcountries-staging","created":"2021-10-28T11:21:00.348Z","modified":"2021-10-28T11:22:56.277Z","_id":"286cad6a-70a9-4824-9f67-71a2f837b72a"}
+{"default":true,"data":[{"name":"hostname","value":"restcountries.azurewebsites.net"}],"sortNum":10000,"name":"restcountries","created":"2021-10-27T19:15:58.317Z","modified":"2021-10-28T11:22:56.277Z","_id":"c6ef5888-be5f-4d57-b4d0-a5d767e00669"}

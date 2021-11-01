@@ -1,6 +1,6 @@
 # @hostname = restcountries-staging.azurewebsites.net
 
-@hostname = restcountries.websites.net
+@hostname = restcountries.azurewebsites.net
 
 ### Health check
 
@@ -66,6 +66,10 @@ GET https://{{hostname}}/countries/callingCode/44
 ###
 
 GET https://{{hostname}}/countries/lang/de
+
+###
+
+GET https://{{hostname}}/countries/lang/deu
 
 
 ### Search for Top level domain (. can be include)

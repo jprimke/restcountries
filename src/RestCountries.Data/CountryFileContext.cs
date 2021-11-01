@@ -20,14 +20,6 @@ public class CountryFileContext : ICountryContext
     
     public IQueryable<CountryInfo> Countries => countries.AsQueryable();
 
-    internal CountryFileContext(ILogger<CountryFileContext> logger, string fileName)
-    {
-        this.logger = logger;
-        countries = JsonSerializer.Deserialize<List<CountryInfo>>(File.OpenRead(fileName),
-                                                                  new JsonSerializerOptions(JsonSerializerDefaults.Web))
-            ?? new();
-    }
-
     public CountryFileContext(ILogger<CountryFileContext> logger, IOptions<CountryFileOptions> options)
     {
         this.logger = logger;

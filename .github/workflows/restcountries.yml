@@ -13,6 +13,7 @@ env:
   WORKING_DIRECTORY: src/RestCountries.API
   TEST_DIRECTORY: Tests/RestCountries.Tests
   WEBAPP_NAME: restcountries_app
+  CosmosDb__ConnectionString: ${{ secret.COSMOSDB_CONNECTIONSTRING }}
 
 concurrency: 
   group: build_and_deploy

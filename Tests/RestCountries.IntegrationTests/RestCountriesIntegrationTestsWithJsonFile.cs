@@ -5,7 +5,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace RestCountries.Tests;
+namespace RestCountries.IntegrationTests;
 
 public class RestCountriesIntegrationTestsWithJsonFile : RestCountriesIntegrationTestsBase
 {

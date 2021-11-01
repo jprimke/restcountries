@@ -8,7 +8,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;
 
-namespace RestCountries.Tests;
+namespace RestCountries.IntegrationTests;
 
 internal class PlaygroundApplication : WebApplicationFactory<Program>
 {

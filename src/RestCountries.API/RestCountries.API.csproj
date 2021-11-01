@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="RestCountries.Tests" />
+    <InternalsVisibleTo Include="RestCountries.IntegrationTests" />
   </ItemGroup>
   
   <ItemGroup>

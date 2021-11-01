@@ -11,7 +11,7 @@ using FluentAssertions;
 using RestCountries.Data.Models;
 using Xunit;
 
-namespace RestCountries.Tests;
+namespace RestCountries.IntegrationTests;
 
 public abstract class RestCountriesIntegrationTestsBase
 {

@@ -5,9 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Cosmos.Infrastructure.Internal;
 using RestCountries.Data.Dbos;
 using RestCountries.Data.Models;
@@ -29,7 +27,7 @@ namespace RestCountries.Data
             {
                 if (!countries.Any())
                 {
-                    var client = this.Database.GetCosmosClient();
+                    var client = Database.GetCosmosClient();
                     var database = client.GetDatabase(dbName);
                     var entityType = Model.FindEntityType(typeof(CountryInfoDbo).FullName!);
                     containerName = entityType?.GetContainer() ?? string.Empty;

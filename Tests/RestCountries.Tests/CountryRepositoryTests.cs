@@ -49,9 +49,12 @@ public partial class CountryRepositoryTests
     [Trait("Category", "UnitTest")]
     public void GetByNamePart_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByName("united", false);
+        var searchValue = "united";
+
+        var countries = sut.GetCountriesByName(searchValue, false);
 
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
     }
 
     [Fact]
@@ -68,18 +71,26 @@ public partial class CountryRepositoryTests
     [Trait("Category", "UnitTest")]
     public void GetByFullName_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByName("Germany", true);
+        var searchValue = "Germany";
+
+        var countries = sut.GetCountriesByName(searchValue, true);
 
         countries.Should().NotBeNullOrEmpty();
+        countries.Should().HaveCount(1);
+        countries.First().Name.ToLower().Should().Be(searchValue.ToLower());
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByFullNativeName_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByName("Deutschland", true);
+        var searchValue = "Deutschland";
+
+        var countries = sut.GetCountriesByName(searchValue, true);
 
         countries.Should().NotBeNullOrEmpty();
+        countries.Should().HaveCount(1);
+        countries.First().NativeName.ToLower().Should().Be(searchValue.ToLower());
     }
 
     [Fact]
@@ -104,6 +115,20 @@ public partial class CountryRepositoryTests
 
         countries.Should().NotBeNull();
         countries.Should().HaveCount(count);
+
+        if (count > 0)
+        {
+            Alpha2CodeOrAlpha3CodeIsEqualToAlphaCode(countries.First(), alphaCode).Should().BeTrue();
+        }
+    }
+
+    private bool Alpha2CodeOrAlpha3CodeIsEqualToAlphaCode(CountryInfo country, string alphaCode)
+    {
+        var alpha2Code = country.Alpha2Code;
+        var alpha3Code = country.Alpha3Code;
+
+        return alpha2Code.Equals(alphaCode, StringComparison.OrdinalIgnoreCase)
+                    || alpha3Code.Equals(alphaCode, StringComparison.OrdinalIgnoreCase);
     }
 
     [Theory]
@@ -112,93 +137,136 @@ public partial class CountryRepositoryTests
     [InlineData("deu", 1)]
     [InlineData("d;us;ar", 2)]
     [InlineData("deut", 0)]
-    public void GetByAlphaCodes_Should_Have_count_Entries(string alphaCode, int count)
+    public void GetByAlphaCodes_Should_Have_count_Entries(string alphaCodes, int count)
     {
-        var splitCodes = alphaCode.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        var splitCodes = alphaCodes.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         var countries = sut.GetCountriesByAlphaCodes(splitCodes);
 
         countries.Should().NotBeNull();
         countries.Should().HaveCount(count);
+
+        if (count > 0)
+        {
+            countries.All(c =>
+                              alphaCodes.Contains(c.Alpha2Code, StringComparison.OrdinalIgnoreCase)
+                              || alphaCodes.Contains(c.Alpha3Code, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
+        }
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByRegion_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByRegion("Europe");
+        var searchValue = "Europe";
+
+        var countries = sut.GetCountriesByRegion(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Region.Equals(searchValue, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetBySubRegion_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesBySubRegion("Central Europe");
+        var searchValue = "Central Europe";
+
+        var countries = sut.GetCountriesBySubRegion(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.SubRegion.Equals(searchValue, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByCurrencyName_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByCurrency("Euro");
+        var searchValue = "Euro";
+
+        var countries = sut.GetCountriesByCurrency(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Currencies.Any(c => c.Name.Equals(searchValue, StringComparison.OrdinalIgnoreCase))).Should().BeTrue();
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByCurrencyCode_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByCurrency("EUR");
+        var searchValue = "EUR";
+
+        var countries = sut.GetCountriesByCurrency(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Currencies.Any(c => c.Code.Equals(searchValue, StringComparison.OrdinalIgnoreCase))).Should().BeTrue();
     }
 
-    [Fact]
+    [Theory]
     [Trait("Category", "UnitTest")]
-    public void GetByCallingCode_Should_Have_Least_One_Entry()
+    [InlineData("1")]
+    [InlineData("49")]
+    [InlineData("86")]
+    public void GetByCallingCode_Should_Have_Least_One_Entry(string searchValue)
     {
-        var countries = sut.GetCountriesByCallingCode("1");
+        var countries = sut.GetCountriesByCallingCode(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.CallingCodes.Contains(searchValue)).Should().BeTrue();
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByCapital_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByCapital("Berlin");
+        var searchValue = "Berlin";
+
+        var countries = sut.GetCountriesByCapital(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Capital.Equals(searchValue, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
     }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByRegionalBloc_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByRegionalBloc("EU");
+        var searchValue = "EU";
+
+        var countries = sut.GetCountriesByRegionalBloc(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c =>
+                          c.RegionalBlocs
+                           .Any(b =>
+                                    b.Acronym.Equals(searchValue, StringComparison.OrdinalIgnoreCase)
+                                    || b.Name.Equals(searchValue, StringComparison.OrdinalIgnoreCase)))
+                 .Should()
+                 .BeTrue();
     }
 
-    [Fact]
+    [Theory]
     [Trait("Category", "UnitTest")]
-    public void GetByTopLevelDomain_Should_Have_Least_One_Entry()
+    [InlineData("de")]
+    [InlineData(".de")]
+    public void GetByTopLevelDomain_Should_Have_Least_One_Entry(string searchValue)
     {
-        var countries = sut.GetCountriesByTopLevelDomain("de");
+        var countries = sut.GetCountriesByTopLevelDomain(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.TopLevelDomain.Any(t => t.EndsWith(searchValue, StringComparison.OrdinalIgnoreCase))).Should().BeTrue();
     }
 
-    [Fact]
-    [Trait("Category", "UnitTest")]
-    public void GetByTopLevelDomainWithPoint_Should_Have_Least_One_Entry()
-    {
-        var countries = sut.GetCountriesByTopLevelDomain(".de");
-        countries.Should().NotBeNullOrEmpty();
-    }
 
     [Fact]
     [Trait("Category", "UnitTest")]
     public void GetByCioc_Should_Have_Least_One_Entry()
     {
-        var countries = sut.GetCountriesByCioc("GER");
+        var searchValue = "GER";
+
+        var countries = sut.GetCountriesByCioc(searchValue);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c => c.Cioc.Equals(searchValue, StringComparison.OrdinalIgnoreCase)).Should().BeTrue();
     }
 
     [Theory]
@@ -210,6 +278,16 @@ public partial class CountryRepositoryTests
     public void GetByLanguage_Should_Have_least_One_Entry(string lang)
     {
         var countries = sut.GetCountriesByLanguage(lang);
+
         countries.Should().NotBeNullOrEmpty();
+        countries.All(c =>
+                          c.Languages
+                           .Any(l =>
+                                    l.Iso639_1.Equals(lang, StringComparison.OrdinalIgnoreCase)
+                                    || l.Iso639_2.Equals(lang, StringComparison.OrdinalIgnoreCase)
+                                    || l.Name.Equals(lang, StringComparison.OrdinalIgnoreCase)
+                                    || l.NativeName.Equals(lang, StringComparison.OrdinalIgnoreCase)))
+                 .Should()
+                 .BeTrue();
     }
 }

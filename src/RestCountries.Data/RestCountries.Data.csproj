@@ -24,7 +24,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Mapster" Version="7.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="6.0.0-rc.2.21480.5" />
   </ItemGroup>
 

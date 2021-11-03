@@ -78,7 +78,7 @@ public class CountryRepository
                                  c.Currencies
                                   .Any(cur =>
                                            cur.Name.Equals(currency, StringComparison.OrdinalIgnoreCase)
-                                           || string.Equals(cur.Code, currency, StringComparison.OrdinalIgnoreCase)))
+                                           || cur.Code.Equals(currency, StringComparison.OrdinalIgnoreCase)))
                       .ToList();
     }
 
@@ -99,7 +99,7 @@ public class CountryRepository
                                  c.RegionalBlocs
                                   .Any(b =>
                                            b.Name.Equals(bloc, StringComparison.OrdinalIgnoreCase)
-                                           || string.Equals(b.Acronym, bloc, StringComparison.OrdinalIgnoreCase)))
+                                           || b.Acronym.Equals(bloc, StringComparison.OrdinalIgnoreCase)))
                       .ToList();
     }
 

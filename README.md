@@ -14,9 +14,30 @@ API Endpoints
 
 Below are described the REST endpoints available that you can use to search for countries
 
+Preparation:
+---------------
+
+__C#__
+``` C#
+using System.Text.Json;
+using System.Net.Http.Json; // from package with the same name
+.
+.
+.
+
+var client = new HttpClient { BaseAddress = "https://restcountries.azurewebsites.new/countries" };
+
+```
+
 All
 ---------------
 
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>("all") ?? Enumerable.Empty<CountryInfo>();
+```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/all
 ```
@@ -26,10 +47,12 @@ Name
 
 Search by country name. It can be the native name or partial name
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/name/{name}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"name/{name}") ?? Enumerable.Empty<CountryInfo>();
 ```
 
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/name/eesti
 ```
@@ -43,23 +66,27 @@ Full Name
 
 Search by country full name
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/name/{name}?fullText=true
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"name/{name}?fulltext=True") ?? Enumerable.Empty<CountryInfo>();
 ```
 
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/name/aruba?fullText=true
 ```
 
-Code
----------------
+Alpha
+------
 
 Search by ISO 3166-1 2-letter or 3-letter country code
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/alpha/{code}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"alpha/{alphaCode}") ?? Enumerable.Empty<CountryInfo>();
 ```
 
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/alpha/co
 ```
@@ -71,12 +98,14 @@ https://restcountries.azurewebsites.net/countries/alpha/col
 List of codes
 ---------------
 
-Search by list of ISO 3166-1 2-letter or 3-letter country codes
+Search by list of ISO 3166-1 2-letter or 3-letter country codes (separated with ";")
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/alpha?codes={code};{code};{code}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"alpha?{codes}") ?? Enumerable.Empty<CountryInfo>();
 ```
 
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/alpha?codes=col;no;ee
 ```
@@ -84,11 +113,14 @@ https://restcountries.azurewebsites.net/countries/alpha?codes=col;no;ee
 Currency
 ---------------
 
-Search by ISO 4217 currency code
+Search by ISO 4217 currency code or currency name
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/currency/{currency}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"currency/{currencyNameOrCode}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/currency/cop
 ```
@@ -96,11 +128,14 @@ https://restcountries.azurewebsites.net/countries/currency/cop
 Language
 ---------------
 
-Search by ISO 639-1 language code
+Search by ISO 639-1 or ISO 639-2 language code, name or native name
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/lang/{et}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"lang/{langCodeOrName}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/lang/es
 ```
@@ -110,9 +145,12 @@ Capital city
 
 Search by capital city
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/capital/{capital}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"capital/{capitalName}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/capital/tallinn
 ```
@@ -122,9 +160,12 @@ Calling code
 
 Search by calling code
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/callingcode/{callingcode}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"callingcode/{callingCode}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/callingcode/372
 ```
@@ -132,11 +173,14 @@ https://restcountries.azurewebsites.net/countries/callingcode/372
 Top level domain
 ------------------
 
-Search by top level domain
+Search by top level domain (with or without starting point)
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/topleveldomain/{topleveldomain}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"topleveldomain/{topLevelDomain}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/topleveldomain/de
 ```
@@ -144,11 +188,14 @@ https://restcountries.azurewebsites.net/countries/topleveldomain/de
 Country code of IOC
 --------------------
 
-Search by cioc
+Search by country code of IOC
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/cioc/{cioc}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"cioc/{cioc}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/cioc/USA
 ```
@@ -158,9 +205,12 @@ Region
 
 Search by region: Africa, Americas, Asia, Europe, Oceania
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/region/{region}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"region/{region}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/region/europe
 ```
@@ -184,9 +234,12 @@ Search by regional bloc:
 - NAFTA (North American Free Trade Agreement)
 - SAARC (South Asian Association for Regional Cooperation)
 
-``` javascript
-https://restcountries.azurewebsites.net/countries/regionalbloc/{regionalbloc}
+__C#__
+``` C#
+IEnumerable<CountryInfo> countryInfo = await client.GetFromJsonAsync<IEnumerable<CountryInfo>>($"regionalbloc/{blocName}") ?? Enumerable.Empty<CountryInfo>();
 ```
+
+__HTML__
 ``` html
 https://restcountries.azurewebsites.net/countries/regionalbloc/eu
 ```

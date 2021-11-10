@@ -130,7 +130,7 @@ https://restcountries.azurewebsites.net/countries/callingcode/372
 ```
 
 Top level domain
----------------
+------------------
 
 Search by top level domain
 
@@ -141,8 +141,8 @@ https://restcountries.azurewebsites.net/countries/topleveldomain/{topleveldomain
 https://restcountries.azurewebsites.net/countries/topleveldomain/de
 ```
 
-Cioc
----------------
+Country code of IOC
+--------------------
 
 Search by cioc
 

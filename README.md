@@ -25,7 +25,7 @@ using System.Net.Http.Json; // from package with the same name
 .
 .
 
-var client = new HttpClient { BaseAddress = "https://restcountries.azurewebsites.new/countries" };
+var client = new HttpClient { BaseAddress = "https://restcountries.azurewebsites.net/countries" };
 
 ```
 

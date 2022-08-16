@@ -27,17 +27,22 @@ namespace RestCountries.Data
             {
                 if (!countries.Any())
                 {
-                    var client = Database.GetCosmosClient();
-                    var database = client.GetDatabase(dbName);
-                    var entityType = Model.FindEntityType(typeof(CountryInfoDbo).FullName!);
-                    containerName = entityType?.GetContainer() ?? string.Empty;
-                    var container = database.GetContainer(containerName);
-
-                    countries = container.GetItemLinqQueryable<CountryInfo>(allowSynchronousQueryExecution: true).ToList();
+                    countries = GetCountriesWithCosmosDbClient();
                 }
 
                 return countries.AsQueryable();
             }
+        }
+
+        private List<CountryInfo> GetCountriesWithCosmosDbClient()
+        {
+            var client = Database.GetCosmosClient();
+            var database = client.GetDatabase(dbName);
+            var entityType = Model.FindEntityType(typeof(CountryInfoDbo).FullName!);
+            containerName = entityType?.GetContainer() ?? string.Empty;
+            var container = database.GetContainer(containerName);
+
+            return container.GetItemLinqQueryable<CountryInfo>(allowSynchronousQueryExecution: true).ToList();
         }
 
         public CountryCosmosContext(DbContextOptions<CountryCosmosContext> options)
